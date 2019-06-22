@@ -1,0 +1,87 @@
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Character Setup
+    </mat-panel-title>
+    <mat-panel-description>
+      Configure your character's ability scores, saves, and other basic stats.
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <h2>General Information</h2>
+  <form id="character-info" [formGroup]='generalSetupForm'>
+    <mat-form-field>
+      <input formControlName='level' matInput type="number" placeholder="Level">
+      <mat-error *ngIf="generalSetupForm.controls.level.invalid">{{ getErrorMessage(generalSetupForm.controls.level) }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName='bab' matInput type="number" placeholder="Base Attack Bonus">
+      <mat-hint>BAB</mat-hint>
+      <mat-error *ngIf="generalSetupForm.controls.bab.invalid">{{ getErrorMessage(generalSetupForm.controls.bab) }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName='attackCount' placeholder="Number of Attacks">
+        <mat-option *ngFor="let item of [1,2,3,4]" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+      <mat-hint>The total number of attacks you have for this level</mat-hint>
+      <mat-error *ngIf="generalSetupForm.controls.attackCount.invalid">{{ getErrorMessage(generalSetupForm.controls.attackCount) }}</mat-error>
+    </mat-form-field>
+  </form>
+
+  <h2>Ability Scores</h2>
+  <form id="character-abilities" [formGroup]='abilityForm'>
+    <div class = "column">
+      <mat-form-field>
+        <input matInput #STR formControlName='strAbility' type="number" placeholder="Strength">
+        <mat-hint *ngIf="STR.value">Modifier: {{ (STR.value - 10) / 2 | number:'1.0-0' | positiveDecorator }}</mat-hint>
+        <mat-error *ngIf="abilityForm.controls.strAbility.invalid">{{ getErrorMessage(abilityForm.controls.strAbility) }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #DEX formControlName='dexAbility' type="number" placeholder="Dexterity">
+        <mat-hint *ngIf="DEX.value">Modifier: {{ (DEX.value - 10) / 2 | number:'1.0-0' | positiveDecorator }}</mat-hint>
+        <mat-error *ngIf="abilityForm.controls.dexAbility.invalid">{{ getErrorMessage(abilityForm.controls.dexAbility) }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #CON formControlName='conAbility' type="number" placeholder="Constitution">
+        <mat-hint *ngIf="CON.value">Modifier: {{ (CON.value - 10) / 2 | number:'1.0-0' | positiveDecorator }}</mat-hint>
+        <mat-error *ngIf="abilityForm.controls.conAbility.invalid">{{ getErrorMessage(abilityForm.controls.conAbility) }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class = "column">
+      <mat-form-field>
+        <input matInput #INT formControlName='intAbility' type="number" placeholder="Intelligence">
+        <mat-hint *ngIf="INT.value">Modifier: {{ (INT.value - 10) / 2 | number:'1.0-0' | positiveDecorator }}</mat-hint>
+        <mat-error *ngIf="abilityForm.controls.intAbility.invalid">{{ getErrorMessage(abilityForm.controls.intAbility) }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #WIS formControlName='wisAbility' type="number" placeholder="Wisdom">
+        <mat-hint *ngIf="WIS.value">Modifier: {{ (WIS.value - 10) / 2 | number:'1.0-0' | positiveDecorator }}</mat-hint>
+        <mat-error *ngIf="abilityForm.controls.wisAbility.invalid">{{ getErrorMessage(abilityForm.controls.wisAbility) }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #CHA formControlName='chaAbility' type="number" placeholder="Charisma">
+        <mat-hint *ngIf="CHA.value">Modifier: {{ (CHA.value - 10) / 2 | number:'1.0-0' | positiveDecorator }}</mat-hint>
+        <mat-error *ngIf="abilityForm.controls.chaAbility.invalid">{{ getErrorMessage(abilityForm.controls.chaAbility) }}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <h2>Base Saves</h2>
+  <form id="character-saves" [formGroup]='savesForm'>
+    <mat-form-field>
+      <input matInput formControlName='fortSave' type="number" placeholder="Fortitude">
+      <mat-error *ngIf="savesForm.controls.fortSave.invalid">{{ getErrorMessage(savesForm.controls.fortSave) }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName='reflexSave' type="number" placeholder="Reflex">
+      <mat-error *ngIf="savesForm.controls.reflexSave.invalid">{{ getErrorMessage(savesForm.controls.reflexSave) }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName='willSave' type="number" placeholder="Will">
+      <mat-error *ngIf="savesForm.controls.willSave.invalid">{{ getErrorMessage(savesForm.controls.willSave) }}</mat-error>
+    </mat-form-field>
+  </form>
+
+</mat-expansion-panel>
