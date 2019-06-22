@@ -58,6 +58,14 @@ export class CharacterSetupComponent implements OnInit {
         Validators.min(1),
       ])
     ],
+    hp: [
+      this.characterService.character.get('hp'),
+      Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+'),
+        Validators.min(1),
+      ])
+    ],
   });
 
   // Ability Form

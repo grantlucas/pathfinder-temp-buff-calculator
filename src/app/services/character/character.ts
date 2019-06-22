@@ -7,6 +7,7 @@ interface CharacterParams {
   level: number;
   bab: number;
   attackCount: number;
+  hp: number;
 
   // Ability Scores
   strAbility: number;
@@ -29,6 +30,7 @@ const characterRecord: CharacterParams = {
   level : 1,
   bab: 1,
   attackCount: 1,
+  hp: 0,
 
   // Ability Scores
   strAbility: 10,
@@ -48,6 +50,7 @@ export class Character extends Record(characterRecord) {
   level: number;
   bab: number;
   attackCount: number;
+  hp: number;
 
   // Ability Scores
   strAbility: number;

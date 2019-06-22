@@ -10,24 +10,33 @@
 
   <h2>General Information</h2>
   <form id="character-info" [formGroup]='generalSetupForm'>
-    <mat-form-field>
-      <input formControlName='level' matInput type="number" placeholder="Level">
-      <mat-error *ngIf="generalSetupForm.controls.level.invalid">{{ getErrorMessage(generalSetupForm.controls.level) }}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input formControlName='bab' matInput type="number" placeholder="Base Attack Bonus">
-      <mat-hint>BAB</mat-hint>
-      <mat-error *ngIf="generalSetupForm.controls.bab.invalid">{{ getErrorMessage(generalSetupForm.controls.bab) }}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select formControlName='attackCount' placeholder="Number of Attacks">
-        <mat-option *ngFor="let item of [1,2,3,4]" [value]="item">
-          {{item}}
-        </mat-option>
-      </mat-select>
-      <mat-hint>The total number of attacks you have for this level</mat-hint>
-      <mat-error *ngIf="generalSetupForm.controls.attackCount.invalid">{{ getErrorMessage(generalSetupForm.controls.attackCount) }}</mat-error>
-    </mat-form-field>
+    <div class = "column">
+      <mat-form-field>
+        <input formControlName='level' matInput type="number" placeholder="Level">
+        <mat-error *ngIf="generalSetupForm.controls.level.invalid">{{ getErrorMessage(generalSetupForm.controls.level) }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input formControlName='hp' matInput type="number" placeholder="Hit Points">
+        <mat-hint>Current HP for this level</mat-hint>
+        <mat-error *ngIf="generalSetupForm.controls.hp.invalid">{{ getErrorMessage(generalSetupForm.controls.hp) }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class = "column">
+      <mat-form-field>
+        <input formControlName='bab' matInput type="number" placeholder="Base Attack Bonus">
+        <mat-hint>BAB</mat-hint>
+        <mat-error *ngIf="generalSetupForm.controls.bab.invalid">{{ getErrorMessage(generalSetupForm.controls.bab) }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName='attackCount' placeholder="Number of Attacks">
+          <mat-option *ngFor="let item of [1,2,3,4]" [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+        <mat-hint>The total number of attacks you have for this level</mat-hint>
+        <mat-error *ngIf="generalSetupForm.controls.attackCount.invalid">{{ getErrorMessage(generalSetupForm.controls.attackCount) }}</mat-error>
+      </mat-form-field>
+    </div>
   </form>
 
   <h2>Ability Scores</h2>
