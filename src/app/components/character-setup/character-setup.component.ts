@@ -1,7 +1,8 @@
 import {
   Component,
   OnInit,
-  OnDestroy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import {
@@ -16,12 +17,12 @@ import {
 } from 'rxjs';
 
 import {
-  debounceTime
+  debounceTime,
+  filter
 } from 'rxjs/operators';
 
 import {
-  CharacterService,
-  Character
+  CharacterService
 } from '../../services/character';
 
 @Component({
@@ -150,11 +151,19 @@ export class CharacterSetupComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    public characterService: CharacterService
+    public characterService: CharacterService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit() {
+    // Update change detection when the character object changes
+    this.characterService.characterUpdated$.pipe(
+      filter(value => value !== null)
+    ).subscribe(() => {
+      this.cdr.detectChanges();
+    });
+
     // Subscribe to the changes of the forms, and write to character
     this.generalSetupForm.valueChanges.pipe(
       debounceTime(500)

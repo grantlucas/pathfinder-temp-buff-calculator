@@ -7,21 +7,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CharacterSetupComponent } from './components/character-setup/character-setup.component';
-
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+
+import { CharacterSetupComponent } from './components/character-setup/character-setup.component';
+import { CharacterSummaryComponent } from './components/character-summary/character-summary.component';
 import { PositiveDecoratorPipe } from './pipes/positive-decorator/positive-decorator.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CharacterSetupComponent,
-    PositiveDecoratorPipe
+    PositiveDecoratorPipe,
+    CharacterSummaryComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +41,10 @@ import { PositiveDecoratorPipe } from './pipes/positive-decorator/positive-decor
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatCardModule,
+    MatListModule,
+    MatIconModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
