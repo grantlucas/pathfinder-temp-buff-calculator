@@ -5,8 +5,9 @@
 </mat-toolbar>
 
 <main>
-  <mat-accordion>
+  <mat-accordion id="main-left-column" class="column">
     <app-character-setup></app-character-setup>
   </mat-accordion>
+  <app-character-summary id="main-right-column" class="column"></app-character-summary>
 </main>
 <router-outlet></router-outlet>

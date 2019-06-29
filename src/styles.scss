@@ -1,4 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/**
+ * Alignment of sections with X items in them, either odd or even
+ */
+.odd-count,
+.even-count {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.odd-count {
+  .mat-list-item,
+  .mat-form-field {
+    flex: 1 0 30%;
+  }
+
+  @media screen and (max-width: 625px) {
+    flex-direction: column;
+  }
+}
+
+.even-count {
+  .mat-list-item,
+  .mat-form-field {
+    flex: 1 0 40%;
+  }
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+/**
+ * Tool Tips Icons
+ */
+.tooltip {
+  height: 12px;
+  width: 12px;
+}

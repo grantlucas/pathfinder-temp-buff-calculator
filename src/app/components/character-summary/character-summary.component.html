@@ -1,0 +1,76 @@
+<mat-card>
+  <mat-card-title>Character Summary</mat-card-title>
+  <mat-card-content>
+    <mat-list>
+      <h2 matSubheader>General</h2>
+      <div id="summary-general" class="even-count">
+        <mat-list-item>
+          <mat-icon matListIcon>person</mat-icon>
+          <h3 matLine>Level: {{ characterService.character.level }}</h3>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListIcon>favorite</mat-icon>
+          <h3 matLine>Hit Points: {{ characterService.character.hp }}</h3>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListIcon>directions_run</mat-icon>
+          <h3 matLine>Initiative Bonus: {{ characterService.character.initiative | positiveDecorator }}</h3>
+        </mat-list-item>
+
+        <mat-list-item matTooltip="AC: 10
+          + 0 Armor
+          + 0 Shield
+          + {{ characterService.character.getAbilityMod('dexAbility') }} Dex
+          + 0 Size
+          + 0 Natural
+          + 0 Deflection
+          + 0 Misc
+          ">
+          <mat-icon matListIcon>security</mat-icon>
+          <h3 matLine>
+            Armor Class: {{ characterService.character.ac }}
+          </h3>
+          <p matLine>Touch: {{ characterService.character.touchAc }}</p>
+          <p matLine>Flat Footed: {{ characterService.character.flatFootedAc }}</p>
+        </mat-list-item>
+      </div>
+
+      <mat-divider inset></mat-divider>
+
+      <h2 matSubheader>Abilities</h2>
+      <div id="summary-abilities" class="even-count">
+        <mat-list-item>
+          <h3 matLine>Strength: {{ characterService.character.strAbility }}</h3>
+          <div class="modifier-large">{{ characterService.character.getAbilityMod('strAbility') | positiveDecorator }}</div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <h3 matLine>Dexterity: {{ characterService.character.dexAbility }}</h3>
+          <div class="modifier-large">{{ characterService.character.getAbilityMod('dexAbility') | positiveDecorator }}</div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <h3 matLine>Constitution: {{ characterService.character.conAbility }}</h3>
+          <div class="modifier-large">{{ characterService.character.getAbilityMod('conAbility') | positiveDecorator }}</div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <h3 matLine>Intelligence: {{ characterService.character.intAbility }}</h3>
+          <div class="modifier-large">{{ characterService.character.getAbilityMod('intAbility') | positiveDecorator }}</div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <h3 matLine>Wisdom: {{ characterService.character.wisAbility }}</h3>
+          <div class="modifier-large">{{ characterService.character.getAbilityMod('wisAbility') | positiveDecorator }}</div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <h3 matLine>Charisma: {{ characterService.character.chaAbility }}</h3>
+          <div class="modifier-large">{{ characterService.character.getAbilityMod('chaAbility') | positiveDecorator }}</div>
+        </mat-list-item>
+      </div>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

@@ -68,4 +68,62 @@ export class Character extends Record(characterRecord) {
   constructor(params?: CharacterParams) {
     params ? super(params) : super();
   }
+
+  public get initiative(): number {
+    return this.getAbilityMod('dexAbility');
+  }
+
+  /**
+   * Armor Class (AC)
+   */
+  public get ac(): number {
+    // Base 10
+    // Armor
+    // Shield
+    // Dex
+    // Size
+    // Natural
+    // Deflection
+    // Misc
+
+    // TODO: Implement the rest
+    return 10 + this.getAbilityMod('dexAbility');
+  }
+
+  /**
+   * Flat Footed AC
+   *
+   * This is AC without the Dex modifier or **Dodge** based bonuses
+   */
+  public get flatFootedAc(): number {
+    return 10;
+  }
+
+  /**
+   * Touch AC
+   *
+   * This is AC without armor, shields, or natural armor
+   */
+  public get touchAc(): number {
+    // Base 10
+    // Dex
+    // Size
+    // Deflection
+    // Misc
+    return 10 + this.getAbilityMod('dexAbility');
+  }
+
+
+  /**
+   * Get Ability Modifier
+   *
+   * Calculate ability modifier given an ability key
+   */
+  public getAbilityMod(key: string): number {
+    if (this.has(key)) {
+      return Math.floor((this[key] - 10) / 2);
+    }
+
+    return 0;
+  }
 }

@@ -1,0 +1,15 @@
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+
+  #main-left-column {
+    flex: 2 1 auto;
+    padding: 10px;
+  }
+
+  #main-right-column {
+    padding: 10px;
+    flex: 1 1 auto;
+  }
+}
