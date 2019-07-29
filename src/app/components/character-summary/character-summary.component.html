@@ -6,12 +6,12 @@
       <div id="summary-general" class="even-count">
         <mat-list-item>
           <mat-icon matListIcon>person</mat-icon>
-          <h3 matLine>Level: {{ characterService.character.level }}</h3>
+          <h3 matLine>{{ characterService.character.level.title }}: {{ characterService.character.level.value }}</h3>
         </mat-list-item>
 
         <mat-list-item>
           <mat-icon matListIcon>favorite</mat-icon>
-          <h3 matLine>Hit Points: {{ characterService.character.hp }}</h3>
+          <h3 matLine>{{ characterService.character.hp.title }}: {{ characterService.character.hp.value }}</h3>
         </mat-list-item>
 
         <mat-list-item>
@@ -22,7 +22,7 @@
         <mat-list-item matTooltip="AC: 10
           + 0 Armor
           + 0 Shield
-          + {{ characterService.character.getAbilityMod('dexAbility') }} Dex
+          + {{ characterService.character.dexAbility.base10Mod }} Dex
           + 0 Size
           + 0 Natural
           + 0 Deflection
@@ -42,33 +42,33 @@
       <h2 matSubheader>Abilities</h2>
       <div id="summary-abilities" class="even-count">
         <mat-list-item>
-          <h3 matLine>Strength: {{ characterService.character.strAbility }}</h3>
-          <div class="modifier-large">{{ characterService.character.getAbilityMod('strAbility') | positiveDecorator }}</div>
+          <h3 matLine>{{ characterService.character.strAbility.title }}: {{ characterService.character.strAbility.value }}</h3>
+          <div class="modifier-large">{{ characterService.character.strAbility.base10Mod | positiveDecorator }}</div>
         </mat-list-item>
 
         <mat-list-item>
-          <h3 matLine>Dexterity: {{ characterService.character.dexAbility }}</h3>
-          <div class="modifier-large">{{ characterService.character.getAbilityMod('dexAbility') | positiveDecorator }}</div>
+          <h3 matLine>{{ characterService.character.dexAbility.title }}: {{ characterService.character.dexAbility.value }}</h3>
+          <div class="modifier-large">{{ characterService.character.dexAbility.base10Mod | positiveDecorator }}</div>
         </mat-list-item>
 
         <mat-list-item>
-          <h3 matLine>Constitution: {{ characterService.character.conAbility }}</h3>
-          <div class="modifier-large">{{ characterService.character.getAbilityMod('conAbility') | positiveDecorator }}</div>
+          <h3 matLine>{{ characterService.character.conAbility.title }}: {{ characterService.character.conAbility.value }}</h3>
+          <div class="modifier-large">{{ characterService.character.conAbility.base10Mod | positiveDecorator }}</div>
         </mat-list-item>
 
         <mat-list-item>
-          <h3 matLine>Intelligence: {{ characterService.character.intAbility }}</h3>
-          <div class="modifier-large">{{ characterService.character.getAbilityMod('intAbility') | positiveDecorator }}</div>
+          <h3 matLine>{{ characterService.character.intAbility.title }}: {{ characterService.character.intAbility.value }}</h3>
+          <div class="modifier-large">{{ characterService.character.intAbility.base10Mod | positiveDecorator }}</div>
         </mat-list-item>
 
         <mat-list-item>
-          <h3 matLine>Wisdom: {{ characterService.character.wisAbility }}</h3>
-          <div class="modifier-large">{{ characterService.character.getAbilityMod('wisAbility') | positiveDecorator }}</div>
+          <h3 matLine>{{ characterService.character.wisAbility.title }}: {{ characterService.character.wisAbility.value }}</h3>
+          <div class="modifier-large">{{ characterService.character.wisAbility.base10Mod | positiveDecorator }}</div>
         </mat-list-item>
 
         <mat-list-item>
-          <h3 matLine>Charisma: {{ characterService.character.chaAbility }}</h3>
-          <div class="modifier-large">{{ characterService.character.getAbilityMod('chaAbility') | positiveDecorator }}</div>
+          <h3 matLine>{{ characterService.character.chaAbility.title }}: {{ characterService.character.chaAbility.value }}</h3>
+          <div class="modifier-large">{{ characterService.character.chaAbility.base10Mod | positiveDecorator }}</div>
         </mat-list-item>
       </div>
     </mat-list>

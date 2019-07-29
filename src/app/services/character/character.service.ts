@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import {
+  fromJS
+} from 'immutable';
+
+import {
   BehaviorSubject
 } from 'rxjs';
 
@@ -27,14 +31,17 @@ export class CharacterService {
     // Load the character from storage on initial load
     const savedCharacter = this.storageService.get('character');
     if (savedCharacter) {
-      this.character = new Character(savedCharacter);
+      // Build new blank character and then deep merge the saved data
+      const savedData = fromJS(savedCharacter);
+      const baseCharacter = new Character();
+      this.character = this.character.mergeDeepIn([], savedData);
     }
 
     // Store the character when changes happen
     this.characterUpdated$.pipe(
       filter(value => value !== null)
     ).subscribe((character: Character) => {
-      this.storageService.save('character', character);
+      this.storageService.save('character', character.toJSON());
     });
   }
 
@@ -46,13 +53,29 @@ export class CharacterService {
   }
 
   /**
-   * Character Info Setter
+   * Set character stat data, or complex object data that's nested within a
+   * list or map on the character object
    */
-  public setCharacterData(data: any): void {
-    this.character = this.character.merge(data);
-    // FIXME: Only emit if there were changes. This could be tied into
-    // some sort of "history" tree to check if it matches the previous
-    // version etc.
-    this.characterUpdated$.next(this.character);
+  public setCharacterStatData(data: any, characterKey?: string): void {
+    if (data) {
+      Object.keys(data).forEach(key => {
+        const value = data[key];
+
+        // Build object route
+        const route: Array<string> = [];
+
+        if (characterKey) {
+          route.push(characterKey);
+        }
+
+        route.push(key);
+
+        this.character = this.character.mergeDeepIn(route, { value });
+      });
+
+      // Loop through entries, and merge their new values with the existing
+      // data for the given key
+      this.characterUpdated$.next(this.character);
+    }
   }
 }

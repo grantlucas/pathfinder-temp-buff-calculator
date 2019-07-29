@@ -11,21 +11,20 @@
   <h2>General Information</h2>
   <form id="character-info" [formGroup]='generalSetupForm' class="even-count">
     <mat-form-field>
-      <input formControlName='level' matInput type="number" placeholder="Level">
+      <input formControlName='level' matInput type="number" placeholder="{{ characterService.character.level.title }}">
       <mat-error *ngIf="generalSetupForm.controls.level.invalid">{{ getErrorMessage(generalSetupForm.controls.level) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input formControlName='hp' matInput type="number" placeholder="Hit Points">
+      <input formControlName='hp' matInput type="number" placeholder="{{ characterService.character.hp.title }}">
       <mat-hint>Current HP for this level</mat-hint>
       <mat-error *ngIf="generalSetupForm.controls.hp.invalid">{{ getErrorMessage(generalSetupForm.controls.hp) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input formControlName='bab' matInput type="number" placeholder="Base Attack Bonus">
-      <mat-hint>BAB</mat-hint>
+      <input formControlName='bab' matInput type="number" placeholder="{{ characterService.character.bab.title }}">
       <mat-error *ngIf="generalSetupForm.controls.bab.invalid">{{ getErrorMessage(generalSetupForm.controls.bab) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-select formControlName='attackCount' placeholder="Number of Attacks">
+      <mat-select formControlName='attackCount' placeholder="{{ characterService.character.attackCount.title }}">
         <mat-option *ngFor="let item of [1,2,3,4]" [value]="item">
           {{item}}
         </mat-option>
@@ -38,33 +37,33 @@
   <h2>Ability Scores</h2>
   <form id="character-abilities" [formGroup]='abilityForm' class="even-count">
     <mat-form-field>
-      <input matInput #STR formControlName='strAbility' type="number" placeholder="Strength">
-      <mat-hint *ngIf="STR.value">Modifier: {{ characterService.character.getAbilityMod('strAbility') | positiveDecorator }}</mat-hint>
+      <input matInput #STR formControlName='strAbility' type="number" placeholder="{{ characterService.character.strAbility.title }}">
+      <mat-hint *ngIf="STR.value">Modifier: {{ characterService.character.strAbility.base10Mod | positiveDecorator }}</mat-hint>
       <mat-error *ngIf="abilityForm.controls.strAbility.invalid">{{ getErrorMessage(abilityForm.controls.strAbility) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput #DEX formControlName='dexAbility' type="number" placeholder="Dexterity">
-      <mat-hint *ngIf="DEX.value">Modifier: {{ characterService.character.getAbilityMod('dexAbility') | positiveDecorator }}</mat-hint>
+      <input matInput #DEX formControlName='dexAbility' type="number" placeholder="{{ characterService.character.dexAbility.title }}">
+      <mat-hint *ngIf="DEX.value">Modifier: {{ characterService.character.dexAbility.base10Mod | positiveDecorator }}</mat-hint>
       <mat-error *ngIf="abilityForm.controls.dexAbility.invalid">{{ getErrorMessage(abilityForm.controls.dexAbility) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput #CON formControlName='conAbility' type="number" placeholder="Constitution">
-      <mat-hint *ngIf="CON.value">Modifier: {{ characterService.character.getAbilityMod('conAbility') | positiveDecorator }}</mat-hint>
+      <input matInput #CON formControlName='conAbility' type="number" placeholder="{{ characterService.character.conAbility.title }}">
+      <mat-hint *ngIf="CON.value">Modifier: {{ characterService.character.conAbility.base10Mod | positiveDecorator }}</mat-hint>
       <mat-error *ngIf="abilityForm.controls.conAbility.invalid">{{ getErrorMessage(abilityForm.controls.conAbility) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput #INT formControlName='intAbility' type="number" placeholder="Intelligence">
-      <mat-hint *ngIf="INT.value">Modifier: {{ characterService.character.getAbilityMod('intAbility') | positiveDecorator }}</mat-hint>
+      <input matInput #INT formControlName='intAbility' type="number" placeholder="{{ characterService.character.intAbility.title }}">
+      <mat-hint *ngIf="INT.value">Modifier: {{ characterService.character.intAbility.base10Mod | positiveDecorator }}</mat-hint>
       <mat-error *ngIf="abilityForm.controls.intAbility.invalid">{{ getErrorMessage(abilityForm.controls.intAbility) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput #WIS formControlName='wisAbility' type="number" placeholder="Wisdom">
-      <mat-hint *ngIf="WIS.value">Modifier: {{ characterService.character.getAbilityMod('wisAbility') | positiveDecorator }}</mat-hint>
+      <input matInput #WIS formControlName='wisAbility' type="number" placeholder="{{ characterService.character.wisAbility.title }}">
+      <mat-hint *ngIf="WIS.value">Modifier: {{ characterService.character.wisAbility.base10Mod | positiveDecorator }}</mat-hint>
       <mat-error *ngIf="abilityForm.controls.wisAbility.invalid">{{ getErrorMessage(abilityForm.controls.wisAbility) }}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput #CHA formControlName='chaAbility' type="number" placeholder="Charisma">
-      <mat-hint *ngIf="CHA.value">Modifier: {{ characterService.character.getAbilityMod('chaAbility') | positiveDecorator }}</mat-hint>
+      <input matInput #CHA formControlName='chaAbility' type="number" placeholder="{{ characterService.character.chaAbility.title }}">
+      <mat-hint *ngIf="CHA.value">Modifier: {{ characterService.character.chaAbility.base10Mod | positiveDecorator }}</mat-hint>
       <mat-error *ngIf="abilityForm.controls.chaAbility.invalid">{{ getErrorMessage(abilityForm.controls.chaAbility) }}</mat-error>
     </mat-form-field>
   </form>

@@ -22,7 +22,8 @@ import {
 } from 'rxjs/operators';
 
 import {
-  CharacterService
+  CharacterService,
+  Stat
 } from '../../services/character';
 
 @Component({
@@ -35,7 +36,7 @@ export class CharacterSetupComponent implements OnInit {
   // General setup form
   public generalSetupForm = this.formBuilder.group({
     level: [
-      this.characterService.character.get('level'),
+      this.characterService.character.level.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -44,15 +45,15 @@ export class CharacterSetupComponent implements OnInit {
       ])
     ],
     bab: [
-      this.characterService.character.get('bab'),
+      this.characterService.character.bab.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
-        Validators.min(1),
+        Validators.min(0),
       ])
     ],
     attackCount: [
-      this.characterService.character.get('attackCount'),
+      this.characterService.character.attackCount.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -60,7 +61,7 @@ export class CharacterSetupComponent implements OnInit {
       ])
     ],
     hp: [
-      this.characterService.character.get('hp'),
+      this.characterService.character.hp.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -72,7 +73,7 @@ export class CharacterSetupComponent implements OnInit {
   // Ability Form
   public abilityForm = this.formBuilder.group({
     strAbility: [
-      this.characterService.character.get('strAbility'),
+      this.characterService.character.strAbility.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -80,7 +81,7 @@ export class CharacterSetupComponent implements OnInit {
       ])
     ],
     dexAbility: [
-      this.characterService.character.get('dexAbility'),
+      this.characterService.character.dexAbility.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -88,7 +89,7 @@ export class CharacterSetupComponent implements OnInit {
       ])
     ],
     conAbility: [
-      this.characterService.character.get('conAbility'),
+      this.characterService.character.conAbility.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -96,7 +97,7 @@ export class CharacterSetupComponent implements OnInit {
       ])
     ],
     intAbility: [
-      this.characterService.character.get('intAbility'),
+      this.characterService.character.intAbility.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -104,7 +105,7 @@ export class CharacterSetupComponent implements OnInit {
       ])
     ],
     wisAbility: [
-      this.characterService.character.get('wisAbility'),
+      this.characterService.character.wisAbility.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -112,7 +113,7 @@ export class CharacterSetupComponent implements OnInit {
       ])
     ],
     chaAbility: [
-      this.characterService.character.get('chaAbility'),
+      this.characterService.character.chaAbility.value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
@@ -124,27 +125,30 @@ export class CharacterSetupComponent implements OnInit {
   // Saves Form
   public savesForm = this.formBuilder.group({
     fortSave: [
-      this.characterService.character.get('fortSave'),
+      this.characterService.character.saves
+        .get('fortSave').value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
-        Validators.min(1),
+        Validators.min(0),
       ])
     ],
     reflexSave: [
-      this.characterService.character.get('reflexSave'),
+      this.characterService.character.saves
+        .get('reflexSave').value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
-        Validators.min(1),
+        Validators.min(0),
       ])
     ],
     willSave: [
-      this.characterService.character.get('willSave'),
+      this.characterService.character.saves
+        .get('willSave').value,
       Validators.compose([
         Validators.required,
         Validators.pattern('[0-9]+'),
-        Validators.min(1),
+        Validators.min(0),
       ])
     ],
   });
@@ -170,7 +174,7 @@ export class CharacterSetupComponent implements OnInit {
     ).subscribe((values) => {
       // Write this data to the character object if valid
       if (this.generalSetupForm.status === 'VALID') {
-        this.characterService.setCharacterData(values);
+        this.characterService.setCharacterStatData(values);
       }
     });
 
@@ -179,7 +183,7 @@ export class CharacterSetupComponent implements OnInit {
     ).subscribe((values) => {
       // Write this data to the character object if valid
       if (this.abilityForm.status === 'VALID') {
-        this.characterService.setCharacterData(values);
+        this.characterService.setCharacterStatData(values);
       }
     });
 
@@ -188,7 +192,7 @@ export class CharacterSetupComponent implements OnInit {
     ).subscribe((values) => {
       // Write this data to the character object if valid
       if (this.savesForm.status === 'VALID') {
-        this.characterService.setCharacterData(values);
+        this.characterService.setCharacterStatData(values, 'saves');
       }
     });
   }

@@ -1,76 +1,134 @@
 import {
-  Record
+  Record,
+  Map
 } from 'immutable';
+
+import {
+  Stat
+} from './stat';
 
 interface CharacterParams {
   /****** User Defined ******/
-  level: number;
-  bab: number;
-  attackCount: number;
-  hp: number;
+  level: Stat;
+  bab: Stat;
+  attackCount: Stat;
+  hp: Stat;
 
   // Ability Scores
-  strAbility: number;
-  dexAbility: number;
-  conAbility: number;
-  intAbility: number;
-  wisAbility: number;
-  chaAbility: number;
+  strAbility: Stat;
+  dexAbility: Stat;
+  conAbility: Stat;
+  intAbility: Stat;
+  wisAbility: Stat;
+  chaAbility: Stat;
 
   // Saves
-  fortSave: number;
-  reflexSave: number;
-  willSave: number;
+  saves: Map<string, Stat>;
 
   /****** Calculated ******/
 }
 
+// Factory record
 const characterRecord: CharacterParams = {
   // General Stats
-  level : 1,
-  bab: 1,
-  attackCount: 1,
-  hp: 0,
+  level: new Stat({
+    value: 1,
+    title: 'Level',
+    shortName: 'Level',
+  }),
+  bab: new Stat({
+    value: 1,
+    title: 'Base Attack Bonus',
+    shortName: 'BAB',
+  }),
+  attackCount: new Stat({
+    value: 1,
+    title: 'Attack Count',
+    shortName: 'Attack Count',
+  }),
+  hp: new Stat({
+    value: 1,
+    title: 'Hit Points',
+    shortName: 'HP',
+  }),
 
   // Ability Scores
-  strAbility: 10,
-  dexAbility: 10,
-  conAbility: 10,
-  intAbility: 10,
-  wisAbility: 10,
-  chaAbility: 10,
+  strAbility: new Stat({
+    value: 10,
+    title: 'Strength',
+    shortName: 'STR',
+  }),
+  dexAbility: new Stat({
+    value: 10,
+    title: 'Dexterity',
+    shortName: 'DEX',
+  }),
+  conAbility: new Stat({
+    value: 10,
+    title: 'Constitution',
+    shortName: 'CON',
+  }),
+  intAbility: new Stat({
+    value: 10,
+    title: 'Intelligence',
+    shortName: 'INT',
+  }),
+  wisAbility: new Stat({
+    value: 10,
+    title: 'Wisdom',
+    shortName: 'WIS',
+  }),
+  chaAbility: new Stat({
+    value: 10,
+    title: 'Charisma',
+    shortName: 'CHA',
+  }),
 
   // Saves
-  fortSave: 0,
-  reflexSave: 0,
-  willSave: 0,
+  saves: Map({
+    fortSave: new Stat({
+      value: 0,
+      title: 'Fortitude Save',
+      shortName: 'Fortitude',
+    }),
+    reflexSave: new Stat({
+      value: 0,
+      title: 'Reflex Save',
+      shortName: 'Reflex',
+    }),
+    willSave: new Stat({
+      value: 0,
+      title: 'Will Save',
+      shortName: 'Will',
+    }),
+  }),
 };
 
 export class Character extends Record(characterRecord) {
-  level: number;
-  bab: number;
-  attackCount: number;
-  hp: number;
+  level: Stat;
+  bab: Stat;
+  attackCount: Stat;
+  hp: Stat;
 
   // Ability Scores
-  strAbility: number;
-  dexAbility: number;
-  conAbility: number;
-  intAbility: number;
-  wisAbility: number;
-  chaAbility: number;
+  strAbility: Stat;
+  dexAbility: Stat;
+  conAbility: Stat;
+  intAbility: Stat;
+  wisAbility: Stat;
+  chaAbility: Stat;
 
   // Saves
-  fortSave: number;
-  reflexSave: number;
-  willSave: number;
+  fortSave: Stat;
+  reflexSave: Stat;
+  willSave: Stat;
 
   constructor(params?: CharacterParams) {
     params ? super(params) : super();
   }
 
   public get initiative(): number {
-    return this.getAbilityMod('dexAbility');
+    return this.dexAbility.base10Mod;
   }
 
   /**
@@ -87,7 +145,7 @@ export class Character extends Record(characterRecord) {
     // Misc
 
     // TODO: Implement the rest
-    return 10 + this.getAbilityMod('dexAbility');
+    return 10 + this.dexAbility.base10Mod;
   }
 
   /**
@@ -110,20 +168,6 @@ export class Character extends Record(characterRecord) {
     // Size
     // Deflection
     // Misc
-    return 10 + this.getAbilityMod('dexAbility');
-  }
-
-
-  /**
-   * Get Ability Modifier
-   *
-   * Calculate ability modifier given an ability key
-   */
-  public getAbilityMod(key: string): number {
-    if (this.has(key)) {
-      return Math.floor((this[key] - 10) / 2);
-    }
-
-    return 0;
+    return 10 + this.dexAbility.base10Mod;
   }
 }
