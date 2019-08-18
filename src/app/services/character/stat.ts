@@ -8,8 +8,10 @@ import {
 } from './modifier';
 
 interface StatParams {
+  base: number;
   value: number;
   title: string;
+  useBase10ModAsValue?: boolean;
   shortName?: string;
   description?: string;
   modifiers?: List<Modifier>;
@@ -17,16 +19,20 @@ interface StatParams {
 
 // Factory record
 const statRecord: StatParams = {
+  base: 0,
   value: 0,
   title: '',
+  useBase10ModAsValue: false,
   shortName: '',
   description: '',
   modifiers: List(),
 };
 
 export class Stat extends Record(statRecord) {
+  base: number;
   value: number;
   title: string;
+  useBase10ModAsValue?: boolean;
   shortName?: string;
   description?: string;
   modifiers?: List<Modifier>;
@@ -36,14 +42,27 @@ export class Stat extends Record(statRecord) {
   }
 
   public valueOf(): number {
+    let modifierSum = 0;
+
+    if (this.modifiers.size > 0) {
+      // Sum up all modifier values
+      modifierSum = this.modifiers
+        .map((modifier) => modifier.valueOf())
+        .reduce((prev: number, current: number): number => prev + current);
+    }
+
+    console.log(modifierSum);
+
     // TODO: Change this to be the original value with modifiers applied
-    return this.value;
+    return this.base + this.value + modifierSum;
   }
 
   public toJSON(): any {
     return {
+      base: this.base,
       value: this.value,
       modifiers: this.modifiers,
+      useBase10ModAsValue: this.useBase10ModAsValue,
     };
   }
 

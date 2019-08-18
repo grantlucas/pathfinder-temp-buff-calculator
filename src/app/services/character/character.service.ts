@@ -13,6 +13,7 @@ import {
 } from 'rxjs/operators';
 
 import { Character } from './character';
+import { Modifier } from './modifier';
 
 import { StorageService } from '../storage';
 
@@ -24,6 +25,7 @@ export class CharacterService {
   public character: Character = new Character();
 
   public characterUpdated$: BehaviorSubject<Character> = new BehaviorSubject(null);
+  public newCharacterCreated$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private storageService: StorageService
@@ -37,11 +39,40 @@ export class CharacterService {
       this.character = this.character.mergeDeepIn([], savedData);
     }
 
-    // Store the character when changes happen
+    // Update the stored character when changes happen
     this.characterUpdated$.pipe(
       filter(value => value !== null)
     ).subscribe((character: Character) => {
       this.storageService.save('character', character.toJSON());
+    });
+
+    // Broadcast event when it's a *new* character object. This provides the
+    // opportunity for initial character setup to take place.
+    if (!savedCharacter) {
+      this.newCharacterCreated$.next(true);
+    }
+
+    // Apply initial set of modifiers for characters such as Dex bonus to
+    // initative
+    this.newCharacterCreated$.pipe(
+      filter(value => value === true)
+    ).subscribe(() => {
+      // FIXME: How do we ensure this value updates when the dex mod changes.
+      // Should we subscribe to when specific properties change and update
+      // these values? Might need to add something to the change event on
+      // _what_ changed.
+
+      // Apply Dex Mod to initiative
+      this.character = this.character.mergeDeepIn(
+        [
+          'initiative',
+          'modifiers'
+        ],
+        this.character.initiative.modifiers.push(new Modifier({
+          title: 'Dex Mod',
+          value: this.character.dexAbility
+        }))
+      );
     });
   }
 
@@ -58,6 +89,8 @@ export class CharacterService {
    */
   public setCharacterStatData(data: any, characterKey?: string): void {
     if (data) {
+      // Loop through entries, and merge their new values with the existing
+      // data for the given key
       Object.keys(data).forEach(key => {
         const value = data[key];
 
@@ -73,8 +106,7 @@ export class CharacterService {
         this.character = this.character.mergeDeepIn(route, { value });
       });
 
-      // Loop through entries, and merge their new values with the existing
-      // data for the given key
+      // Trigger that the character was updated
       this.characterUpdated$.next(this.character);
     }
   }
